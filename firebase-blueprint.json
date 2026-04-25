@@ -1,0 +1,53 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Negotiation": {
+      "title": "Negotiation",
+      "description": "A market negotiation session saved by a farmer",
+      "type": "object",
+      "properties": {
+        "crop_name": { "type": "string" },
+        "quantity": { "type": "string" },
+        "location": { "type": "string" },
+        "buyer_offer": { "type": "string" },
+        "urgency": { "type": "string" },
+        "transport_cost": { "type": "string" },
+        "language_preference": { "type": "string" },
+        "ai_response": {
+          "type": "object",
+          "properties": {
+            "suggested_price_range": { "type": "string" },
+            "fair_price": { "type": "string" },
+            "negotiation_tips": { "type": "array", "items": { "type": "string" } },
+            "market_outlook": { "type": "string" },
+            "risk_note": { "type": "string" },
+            "confidence_level": { "type": "string", "enum": ["low", "medium", "high"] },
+            "short_summary": { "type": "string" }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Public user data"
+    },
+    "/users/{userId}/negotiations/{negotiationId}": {
+      "schema": "Negotiation",
+      "description": "History of negotiations for a user"
+    }
+  }
+}

@@ -1,11 +1,55 @@
-<div align="center">
+# Mkulima Smart 🌽
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+AI-powered market negotiator for Kenyan farmers.
 
-  <h1>Built with AI Studio</h2>
+## Features
+- **Smart Negotiation**: Get fair price estimates and tips using Gemini AI.
+- **Language Support**: Code-switch between Sheng and English.
+- **Market Outlook**: Real-time analysis of crop trends in Kenya.
+- **History Tracking**: Securely save all your negotiations in Firestore.
+- **Google Auth**: Simple login for farmers.
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## Technology Stack
+- **Frontend**: React (Vite), Tailwind CSS, Motion.
+- **Backend**: Node.js (Express), Gemini API.
+- **Database/Auth**: Firebase Firestore & Authentication.
+- **Deployment**: Google Cloud Run.
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+## Setup Instructions
 
-</div>
+### Prerequisites
+- Node.js 20+
+- Firebase Project
+- Gemini API Key
+
+### Local Development
+1. Clone the repository.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up environment variables in `.env`:
+   ```env
+   GEMINI_API_KEY=your_api_key_here
+   ```
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+### Deployment to Cloud Run
+1. Build the Docker image:
+   ```bash
+   docker build -t gcr.io/[PROJECT_ID]/mkulima-smart .
+   ```
+2. Push to Container Registry:
+   ```bash
+   docker push gcr.io/[PROJECT_ID]/mkulima-smart
+   ```
+3. Deploy to Cloud Run:
+   ```bash
+   gcloud run deploy mkulima-smart --image gcr.io/[PROJECT_ID]/mkulima-smart --platform managed
+   ```
+
+## License
+Apache-2.0
