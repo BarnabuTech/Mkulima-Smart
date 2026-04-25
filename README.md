@@ -2,6 +2,28 @@
 
 AI-powered market negotiator for Kenyan farmers.
 
+## Problem Statement
+
+Many farmers still struggle with:
+- Unreliable market information
+- Limited access to timely agricultural advice
+- Poor decision-making on crop planning and sales
+- Lack of accessible digital farming tools
+- Difficulty understanding modern agricultural systems
+
+Mkulima Smart addresses these challenges by offering a smart, accessible, and easy-to-use platform for farmers.
+
+## Project Overview
+
+Mkulima Smart aims to bridge the gap between farmers and reliable agricultural information by providing:
+- Smart farming support
+- Agricultural market insights
+- Farmer-friendly digital tools
+- Easy access to practical crop information
+- A modern web experience for agricultural innovation
+
+This project is designed with the goal of improving productivity, reducing uncertainty, and helping farmers make informed decisions in a simple and accessible way.
+
 ## Features
 - **Smart Negotiation**: Get fair price estimates and tips using Gemini AI.
 - **Language Support**: Code-switch between Sheng and English.
@@ -13,7 +35,7 @@ AI-powered market negotiator for Kenyan farmers.
 - **Frontend**: React (Vite), Tailwind CSS, Motion.
 - **Backend**: Node.js (Express), Gemini API.
 - **Database/Auth**: Firebase Firestore & Authentication.
-- **Deployment**: Google Cloud Run.
+- **Deployment**: Google Cloud Run or Vercel.
 
 ## Setup Instructions
 
@@ -30,7 +52,14 @@ AI-powered market negotiator for Kenyan farmers.
    ```
 3. Set up environment variables in `.env`:
    ```env
-   GEMINI_API_KEY=your_api_key_here
+   VITE_GEMINI_API_KEY=your_api_key_here
+   VITE_FIREBASE_API_KEY=your_api_key_here
+   VITE_FIREBASE_AUTH_DOMAIN=your_api_key_here
+   VITE_FIREBASE_PROJECT_ID=your_api_key_here
+   VITE_FIREBASE_STORAGE_BUCKET=your_api_key_here
+   VITE_FIREBASE_MESSAGING_SENDER_ID=your_api_key_here
+   VITE_FIREBASE_APP_ID=your_api_key_here
+   VITE_FIREBASE_FIRESTORE_DATABASE_ID=your_api_key_here
    ```
 4. Run the development server:
    ```bash
