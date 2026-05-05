@@ -130,7 +130,7 @@ export default function Dashboard() {
                       {neg.createdAt?.seconds ? format(new Date(neg.createdAt.seconds * 1000), 'MMM d, yyyy') : 'Recently'}
                     </td>
                     <td className="px-6 py-4 text-right">
-                       <button className="text-stone-400 hover:text-emerald-600 p-2">
+                       <button className="text-stone-400 hover:text-emerald-600 p-2" title="View negotiation details">
                          <Info size={18} />
                        </button>
                     </td>

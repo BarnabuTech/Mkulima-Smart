@@ -66,7 +66,7 @@ export default function HistoryPage() {
               onChange={e => setSearchTerm(e.target.value)}
             />
           </div>
-          <button className="bg-white border-stone-100 border-2 p-2.5 rounded-xl text-stone-500 hover:text-emerald-600 transition-all">
+          <button className="bg-white border-stone-100 border-2 p-2.5 rounded-xl text-stone-500 hover:text-emerald-600 transition-all" title="Filter negotiations">
             <Filter size={18} />
           </button>
         </div>
@@ -123,7 +123,7 @@ export default function HistoryPage() {
       {/* Details Modal */}
       <AnimatePresence>
         {selectedNegotiation && (
-          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-60 flex items-center justify-center p-4\">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -143,6 +143,7 @@ export default function HistoryPage() {
                 <button 
                   onClick={() => setSelectedNegotiation(null)}
                   className="bg-white/20 hover:bg-white/30 p-2 rounded-full transition-colors"
+                  title="Close details"
                 >
                   <X />
                 </button>

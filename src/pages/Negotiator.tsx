@@ -34,6 +34,7 @@ export default function Negotiator() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AIResponse | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageBase64, setImageBase64] = useState<string | null>(null);
   const [imageMimeType, setImageMimeType] = useState<string | null>(null);
@@ -105,6 +106,7 @@ export default function Negotiator() {
     e.preventDefault();
     setLoading(true);
     setResult(null);
+    setErrorMessage(null);
     window.speechSynthesis.cancel(); // Stop any ongoing speech
     setIsSpeaking(false);
 
@@ -127,7 +129,11 @@ export default function Negotiator() {
       }
     } catch (err) {
       console.error(err);
-      alert("Something went wrong. Tafadhali jaribu tena. Check your Gemini API Key.");
+      const message =
+        err instanceof Error && err.message
+          ? err.message
+          : "Something went wrong. Tafadhali jaribu tena.";
+      setErrorMessage(message);
     } finally {
       setLoading(false);
     }
@@ -148,6 +154,34 @@ export default function Negotiator() {
               <p className="text-stone-500">Toa details za bidhaa yako upate bei ya soko.</p>
             </div>
 
+            <AnimatePresence>
+              {errorMessage && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  className="mb-6 rounded-2xl border border-red-200 bg-red-50 p-4 flex items-start justify-between gap-4"
+                  role="alert"
+                >
+                  <div className="flex gap-3">
+                    <AlertTriangle className="text-red-600 shrink-0 mt-0.5" size={18} />
+                    <div>
+                      <p className="font-bold text-red-900">Couldn’t generate strategy</p>
+                      <p className="text-sm text-red-800 mt-1">{errorMessage}</p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setErrorMessage(null)}
+                    className="p-2 rounded-full text-red-700 hover:bg-red-100 transition-colors"
+                    aria-label="Dismiss error"
+                  >
+                    <CloseIcon size={18} />
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <form onSubmit={handleSubmit} className="bg-white p-8 rounded-3xl border border-stone-100 shadow-sm grid md:grid-cols-2 gap-8">
               <div className="space-y-6">
                 <div>
@@ -167,19 +201,19 @@ export default function Negotiator() {
 
                 {/* Quality Grading Upload */}
                 <div>
-                  <label className="flex items-center gap-2 text-sm font-bold text-stone-700 mb-2">
+                  <label htmlFor="qualityPhoto" className="flex items-center gap-2 text-sm font-bold text-stone-700 mb-2">
                     <Camera size={16} className="text-emerald-500" />
                     Upload Photo (Optional) / AI Grading
                   </label>
                   {!imagePreview ? (
-                    <div 
-                      onClick={() => fileInputRef.current?.click()}
-                      className="w-full aspect-video bg-stone-50 border-2 border-dashed border-stone-200 rounded-2xl flex flex-col items-center justify-center cursor-pointer hover:bg-stone-100 transition-all border-emerald-500/20"
+                    <label
+                      htmlFor="qualityPhoto"
+                      className="w-full aspect-video bg-stone-50 border-2 border-dashed border-stone-200 rounded-2xl flex flex-col items-center justify-center cursor-pointer hover:bg-stone-100 transition-all"
                     >
                       <Camera size={32} className="text-stone-300 mb-2" />
                       <p className="text-xs font-bold text-stone-400">Click to snap or upload</p>
                       <p className="text-[10px] text-stone-300 mt-1">Get AI Quality Grading</p>
-                    </div>
+                    </label>
                   ) : (
                     <div className="relative aspect-video rounded-2xl overflow-hidden border-2 border-emerald-500/30">
                       <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
@@ -187,17 +221,20 @@ export default function Negotiator() {
                         type="button"
                         onClick={clearImage}
                         className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                        aria-label="Remove uploaded photo"
                       >
                         <CloseIcon size={16} />
                       </button>
                     </div>
                   )}
                   <input 
+                    id="qualityPhoto"
                     type="file" 
                     accept="image/*" 
                     className="hidden" 
                     ref={fileInputRef} 
                     onChange={handleImageChange}
+                    aria-label="Upload produce photo for grading"
                   />
                 </div>
 
@@ -248,11 +285,12 @@ export default function Negotiator() {
                 </div>
 
                 <div>
-                  <label className="flex items-center gap-2 text-sm font-bold text-stone-700 mb-2">
+                  <label htmlFor="urgency" className="flex items-center gap-2 text-sm font-bold text-stone-700 mb-2">
                     <Zap size={16} className="text-emerald-500" />
                     How fast must you sell? / Haraka kiasi gani?
                   </label>
                   <select
+                    id="urgency"
                     className="w-full bg-stone-50 border-stone-100 border-2 px-4 py-3 rounded-xl focus:border-emerald-500 outline-none transition-all"
                     value={formData.urgency}
                     onChange={e => setFormData({ ...formData, urgency: e.target.value })}
@@ -278,11 +316,12 @@ export default function Negotiator() {
                 </div>
 
                 <div>
-                  <label className="flex items-center gap-2 text-sm font-bold text-stone-700 mb-2">
+                  <label htmlFor="languagePreference" className="flex items-center gap-2 text-sm font-bold text-stone-700 mb-2">
                     <Languages size={16} className="text-emerald-500" />
                     Preferred Language / Lugha Unayopenda
                   </label>
                   <select
+                    id="languagePreference"
                     className="w-full bg-stone-50 border-stone-100 border-2 px-4 py-3 rounded-xl focus:border-emerald-500 outline-none transition-all"
                     value={formData.language_preference}
                     onChange={e => setFormData({ ...formData, language_preference: e.target.value })}

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Sprout, TrendingUp, Handshake, ShieldCheck, ArrowRight } from 'lucide-react';
+import farmerImage from '../assets/farmer.jpg';
 
 export default function LandingPage() {
   return (
@@ -53,15 +54,28 @@ export default function LandingPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative lg:justify-self-end"
           >
-            <div className="w-full max-w-[500px] aspect-square rounded-3xl overflow-hidden shadow-2xl relative z-10 border-4 border-white">
+            {/* Decorative Background Blur */}
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 via-transparent to-orange-400/20 rounded-3xl blur-2xl -z-10 scale-105"></div>
+            
+            {/* Main Image Container */}
+            <div className="w-full max-w-125 aspect-square rounded-3xl overflow-hidden shadow-2xl relative z-10 border-4 border-white backdrop-blur-sm group">
+              {/* Image with Overlay */}
               <img 
-                src="https://images.unsplash.com/photo-1594488651833-11382f124294?q=80&w=2000&auto=format&fit=crop" 
-                alt="African Farmer"
-                className="w-full h-full object-cover"
+                src={farmerImage}
+                alt="African Farmer - Mkulima Smart"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
+              {/* Subtle Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
-            {/* Floating Card */}
-            <div className="absolute -bottom-10 -left-10 bg-white p-6 rounded-2xl shadow-xl z-20 hidden md:block max-w-xs border border-stone-100">
+
+            {/* Floating Card with Animation */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="absolute -bottom-10 -left-10 bg-white p-6 rounded-2xl shadow-xl z-20 hidden md:block max-w-xs border border-stone-100 hover:shadow-2xl transition-all hover:scale-105 duration-300"
+            >
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600">
                   <TrendingUp size={24} />
@@ -74,7 +88,7 @@ export default function LandingPage() {
               <p className="text-sm text-stone-600">
                 Soko iko fiti leo. Weka bei ya juu kidogo juu ya demand ya maize imeongezeka.
               </p>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
