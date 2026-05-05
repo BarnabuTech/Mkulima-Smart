@@ -50,9 +50,12 @@ This project is designed with the goal of improving productivity, reducing uncer
    ```bash
    npm install
    ```
-3. Set up environment variables in `.env`:
+3. Set up environment variables in `.env.local` (do not commit it). You can start from `.env.example`:
    ```env
-   VITE_GEMINI_API_KEY=your_api_key_here
+   # server-only
+   GEMINI_API_KEY=your_api_key_here
+
+   # client (Vite)
    VITE_FIREBASE_API_KEY=your_api_key_here
    VITE_FIREBASE_AUTH_DOMAIN=your_api_key_here
    VITE_FIREBASE_PROJECT_ID=your_api_key_here
